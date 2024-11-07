@@ -23,3 +23,5 @@ This project integrates a Laravel application with Airtable, allowing you to cre
 ```bash
 git clone https://github.com/ahmedelgaml9/Tasks.git
 cd TestProject
+php artisan serve 
+
