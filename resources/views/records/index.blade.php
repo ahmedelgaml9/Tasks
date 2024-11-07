@@ -3,14 +3,18 @@
 <div class="container mx-auto mt-10">
     <div class="flex justify-between mb-6">
         <h1 class="text-2xl font-semibold">Records</h1>
-        <a href="{{ route('records.create') }}" class="bg-blue-500 text-white px-4 py-2 rounded">
+        <a href="{{ route('records.create') }}" class="btn btn-success">
             Add New Record
         </a>
     </div>
-
-    @if(session('status'))
-        <div class="bg-green-500 text-white p-4 rounded mb-4">{{ session('status') }}</div>
+    
+    <div class="flex justify-between mb-6">
+    @if(\Session::get('success'))
+    <div style="background-color: #d1e7dd; color: #0f5132; border: 1px solid #badbcc; padding: 1rem; border-radius: 0.25rem; margin-bottom: 1rem;">
+        <strong>Success!</strong> {{ session('success') }}
+    </div> 
     @endif
+    </div>
 
     <table class="w-full bg-white shadow-md rounded mb-4">
         <thead>
@@ -25,72 +29,29 @@
         </thead>
         <tbody id="record-list">
             @foreach($records as $record)
-                <tr id="record-{{ $record['id'] }}">
-                    <td class="py-2 px-4">{{ $record['id'] }}</td>
-                    <td class="py-2 px-4">{{ $record['name'] }}</td>
-                    <td class="py-2 px-4">{{ $record['description'] }}</td>
-                    <td class="py-2 px-4">{{ $record['status'] }}</td>
-                    <td class="py-2 px-4">{{ $record['created_at'] }}</td>
-                    <td class="py-2 px-4 flex space-x-2">
-                        <a href="{{ route('records.edit', $record['id']) }}" class="bg-yellow-500 text-white px-2 py-1 rounded">Edit</a>
-                        <button onclick="showDeleteModal('{{ $record['id'] }}')" 
-                            class="bg-red-500 text-white px-2 py-1 rounded">Delete</button>
-                    </td>
-                </tr>
+            <tr id="record-{{ $record['id'] }}">
+                <td class="py-2 px-4">{{ $record['id'] }}</td>
+                <td class="py-2 px-4">{{ $record['fields']['Name'] ?? 'N/A' }}</td>
+                <td class="py-2 px-4">{{ $record['fields']['Description'] ?? 'N/A' }}</td>
+                <td class="py-2 px-4">{{ $record['fields']['Status'] ?? 'N/A' }}</td>
+                <td class="py-2 px-4">{{ $record['createdTime'] }}</td>
+                <td class="py-2 px-4 flex space-x-2">
+                    <a href="{{ route('records.edit', $record['id']) }}" class="btn btn-primary rounded">Edit</a>
+                    <button 
+                        class="btn btn-danger"
+                        data-toggle="modal"
+                        data-target="#modal_{{ $record['id']}}">
+                         Delete
+                    </button>
+                     @include('records.modals.delete_modal')
+                </td>
+            </tr>
             @endforeach
-        </tbody>
+         </tbody>
     </table>
-
-    <div class="mt-4">
-        {{ $records->links() }}
-    </div>
 </div>
-
-<div id="delete-modal" class="fixed inset-0 bg-gray-900 bg-opacity-50 hidden justify-center items-center">
-    <div class="bg-white p-6 rounded shadow-lg text-center">
-        <h2 class="text-xl font-semibold mb-4">Are you sure?</h2>
-        <p class="text-gray-700 mb-6">This action cannot be undone.</p>
-        
-        <button id="confirm-delete" class="bg-red-500 text-white px-4 py-2 rounded mr-2">Yes, Delete</button>
-        <button type="button" onclick="hideDeleteModal()" class="bg-gray-300 px-4 py-2 rounded">Cancel</button>
-    </div>
-</div>
-
 @endsection
-
 @section('scripts')
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    let deleteRecordId;
-
-    function showDeleteModal(recordId) {
-        deleteRecordId = recordId;
-        $('#delete-modal').removeClass('hidden');
-    }
-
-    function hideDeleteModal() {
-        $('#delete-modal').addClass('hidden');
-        deleteRecordId = null;
-    }
-
-    $('#confirm-delete').on('click', function() {
-        if (deleteRecordId) {
-            $.ajax({
-                url: `/records/${deleteRecordId}`,
-                type: 'DELETE',
-                data: {
-                    _token: '{{ csrf_token() }}'
-                },
-                success: function(response) {
-                    $(`#record-${deleteRecordId}`).remove();
-                    hideDeleteModal();
-                    alert(response.message || 'Record deleted successfully');
-                },
-                error: function(xhr) {
-                    alert(xhr.responseJSON.message || 'An error occurred while deleting the record.');
-                }
-            });
-        }
-    });
-</script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 @endsection

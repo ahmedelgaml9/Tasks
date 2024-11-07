@@ -16,21 +16,25 @@
     <form action="{{ route('records.store') }}" method="POST" class="bg-white shadow-md rounded p-6">
         @csrf
         <div class="mb-4">
-            <label for="name" class="block text-gray-700">Name</label>
-            <input type="text" name="name" id="name" class="w-full px-4 py-2 border rounded" value="{{ old('name') }}" required>
+            <label for="name" class="form-label text-gray-700">Name</label>
+            <input type="text" name="name" id="name" class="form-control" value="{{ old('name') }}" required>
         </div>
+        
         <div class="mb-4">
-            <label for="description" class="block text-gray-700">Description</label>
-            <textarea name="description" id="description" class="w-full px-4 py-2 border rounded">{{ old('description') }}</textarea>
+            <label for="description" class="form-label text-gray-700">Description</label>
+            <textarea name="description" id="description" class="form-control">{{ old('description') }}</textarea>
         </div>
+        
         <div class="mb-4">
-            <label for="status" class="block text-gray-700">Status</label>
-            <select name="status" id="status" class="w-full px-4 py-2 border rounded">
-                <option value="Active">Active</option>
-                <option value="Inactive">Inactive</option>
+            <label for="status" class="form-label text-gray-700">Status</label>
+            <select name="status" id="status" class="form-select">
+                <option value="Todo" {{ old('status') == 'Todo' ? 'selected' : '' }}>Todo</option>
+                <option value="Done" {{ old('status') == 'Done' ? 'selected' : '' }}>Done</option>
             </select>
         </div>
-        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Save Record</button>
+
+        <button type="submit" class="btn btn-primary">Save Record</button>
     </form>
+
 </div>
 @endsection

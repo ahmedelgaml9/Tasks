@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RecordController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -13,8 +16,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::view('/', 'welcome');
 
-Route::resource('/', RecordController::class);
+Route::resource('records', RecordController::class);
 
 Auth::routes();
 
