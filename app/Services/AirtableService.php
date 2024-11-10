@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Services;
-
 use Illuminate\Support\Facades\Http;
 
 
@@ -33,7 +32,7 @@ class AirtableService
             ]);
       
         if ($response->successful()) {
-            return $response->json();
+            return $response->json()['id'];
         }
     
         \Log::error('Airtable create failed:', $response->json());
@@ -41,9 +40,9 @@ class AirtableService
         return null;
     }
     
-
     public function getRecord($id)
     {
+        
         $response = Http::withToken(env('AIRTABLE_API_KEY'))->get("{$this->baseUrl}/{$id}");
 
         if ($response->successful()) {

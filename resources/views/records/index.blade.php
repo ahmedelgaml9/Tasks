@@ -30,17 +30,17 @@
         <tbody id="record-list">
             @foreach($records as $record)
             <tr id="record-{{ $record['id'] }}">
-                <td class="py-2 px-4">{{ $record['id'] }}</td>
-                <td class="py-2 px-4">{{ $record['fields']['Name'] ?? 'N/A' }}</td>
-                <td class="py-2 px-4">{{ $record['fields']['Description'] ?? 'N/A' }}</td>
-                <td class="py-2 px-4">{{ $record['fields']['Status'] ?? 'N/A' }}</td>
-                <td class="py-2 px-4">{{ $record['createdTime'] }}</td>
+                <td class="py-2 px-4">{{ $record->id }}</td>
+                <td class="py-2 px-4">{{ $record->name  }}</td>
+                <td class="py-2 px-4">{{ $record->description  }}</td>
+                <td class="py-2 px-4">{{ $record->status }}</td>
+                <td class="py-2 px-4">{{ $record->created_at }}</td>
                 <td class="py-2 px-4 flex space-x-2">
-                    <a href="{{ route('records.edit', $record['id']) }}" class="btn btn-primary rounded">Edit</a>
+                    <a href="{{ route('records.edit', $record->id) }}" class="btn btn-primary rounded">Edit</a>
                     <button 
                         class="btn btn-danger"
                         data-toggle="modal"
-                        data-target="#modal_{{ $record['id']}}">
+                        data-target="#modal_{{ $record->id }}">
                          Delete
                     </button>
                      @include('records.modals.delete_modal')

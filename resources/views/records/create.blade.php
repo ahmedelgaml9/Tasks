@@ -28,8 +28,8 @@
         <div class="mb-4">
             <label for="status" class="form-label text-gray-700">Status</label>
             <select name="status" id="status" class="form-select">
-                <option value="Todo" {{ old('status') == 'Todo' ? 'selected' : '' }}>Todo</option>
-                <option value="Done" {{ old('status') == 'Done' ? 'selected' : '' }}>Done</option>
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
             </select>
         </div>
 
