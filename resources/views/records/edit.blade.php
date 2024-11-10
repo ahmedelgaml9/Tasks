@@ -28,7 +28,7 @@
             <label for="status" class="form-control">Status</label>
             <select name="status" id="status" class="w-full px-4 py-2 border rounded">
                 <option value="Active" {{ $record->status == 'Active' ? 'selected' : '' }}>Active</option>
-                <option value="Inactive" {{ $recor->status == 'Inactive' ? 'selected' : '' }}>Inactive</option>
+                <option value="Inactive" {{ $record->status == 'Inactive' ? 'selected' : '' }}>Inactive</option>
             </select>
         </div>
         <button type="submit" class="btn btn-primary">Save Changes</button>

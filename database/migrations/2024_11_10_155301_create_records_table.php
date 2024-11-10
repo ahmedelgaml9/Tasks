@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('description');
             $table->enum('status',['Active','Inactive']);
+            $table->string('airtable_id')->nullable();
             $table->timestamps();
         });
     }

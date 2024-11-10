@@ -10,9 +10,8 @@ use App\Models\Record;
 class RecordController extends Controller
 {
     
-    public function index(AirtableService $airtable)
+    public function index()
     {
-
         //$response = $airtable->getRecords();
         //$records = $response['records'] ?? [];
 
@@ -36,7 +35,7 @@ class RecordController extends Controller
         }, ARRAY_FILTER_USE_KEY);
 
         $record = Record::create($data);
-        $airtable->createRecord($data);
+        $airtableId = $airtable->createRecord($data);
         $record->update(['airtable_id' => $airtableId]);
 
         return redirect()->route('records.index')->with('success', 'Record created successfully.');
